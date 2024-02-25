@@ -1,0 +1,43 @@
+{
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.user",
+      "description": "user"
+    },
+    {
+      "name": "$XSAPPNAME.admin",
+      "description": "admin"
+    },
+    {
+      "name": "$XSAPPNAME.moderator",
+      "description": "moderator"
+    }
+  ],
+  "attributes": [],
+  "role-templates": [
+    {
+      "name": "user",
+      "description": "generated",
+      "scope-references": [
+        "$XSAPPNAME.user"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "admin",
+      "description": "generated",
+      "scope-references": [
+        "$XSAPPNAME.admin"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "moderator",
+      "description": "generated",
+      "scope-references": [
+        "$XSAPPNAME.moderator"
+      ],
+      "attribute-references": []
+    }
+  ]
+}

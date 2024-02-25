@@ -1,0 +1,17 @@
+# Generated manifest.yml based on template version 0.1.0
+# appName = sitbne-sdm
+# language=nodejs
+# multitenancy=
+---
+applications:
+# -----------------------------------------------------------------------------------
+# Backend Service
+# -----------------------------------------------------------------------------------
+- name: soap-server
+  random-route: true  # for development only
+  path: .
+  memory: 128M
+  buildpacks:
+  - nodejs_buildpack
+
+

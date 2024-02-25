@@ -1,0 +1,47 @@
+_schema-version: '3.1'
+ID: sitbne-listener
+version: 1.0.0
+description: "SITBNE: Example app using redis cache as messaging medium"
+parameters:
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npx cds build --production
+modules:
+  - name: sitbne-listener-srv
+    type: nodejs
+    path: gen/srv
+    parameters:
+      buildpack: nodejs_buildpack
+    build-parameters:
+      builder: npm
+    provides:
+      - name: srv-api # required by consumers of CAP services (e.g. approuter)
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: sitbne-listener-logging
+      - name: sitbne-listener-auth
+      - name: sitbne-listener-redis
+
+resources:
+  - name: sitbne-listener-redis
+    type: org.cloudfoundry.existing-service
+    parameters:
+      service-name: redis-free
+  - name: sitbne-listener-logging
+    type: org.cloudfoundry.existing-service
+    parameters:
+      service-name: sitbne-sdm-logging
+  - name: sitbne-listener-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+      config:
+        xsappname: sitbne-listener-${org}-${space}
+        tenant-mode: dedicated
+

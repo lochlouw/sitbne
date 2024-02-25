@@ -1,0 +1,27 @@
+
+
+
+@url=http://localhost:4004
+
+###
+# @name get_service
+GET {{url}}/odata/v4/CMIS HTTP/1.1
+
+
+###
+# @name post_file
+POST {{url}}/odata/v4/CMIS/Files()/content HTTP/1.1
+Content-Type: image/png
+
+< ./sitbne.png
+
+###
+# @name get_files
+GET {{url}}/odata/v4/CMIS/Files HTTP/1.1
+
+###
+# @name get_file
+
+###
+# @name get_file
+

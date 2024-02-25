@@ -1,0 +1,74 @@
+{
+  "name": "sitbne-sdm",
+  "version": "1.0.0",
+  "description": "SAP Inside Track Brisbane - SAP DMS",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap-cloud-sdk/connectivity": "^3.12.0",
+    "@sap-cloud-sdk/http-client": "^3.12.0",
+    "@sap-cloud-sdk/resilience": "^3.12.0",
+    "@sap/cds": "^7",
+    "@sap/xsenv": "^4.2.0",
+    "@sap/xssec": "^3",
+    "express": "^4",
+    "passport": "^0.7.0",
+    "sap-cap-sdm-plugin": "^1.2.7"
+  },
+  "devDependencies": {
+    "@cap-js/sqlite": "^1",
+    "@sap/cds-dk": "^7",
+    "@sap/ux-specification": "^1.120.4",
+    "cds-swagger-ui-express": "^0.8.0",
+    "rimraf": "^3.0.2"
+  },
+  "scripts": {
+    "start": "cds-serve",
+    "start:app": "cds bind --exec -- npm start --prefix app --for hybrid",
+    "start:sqlite": "cds watch --profile sqlite",
+    "bind:uaa": "cds bind uaa --to sitbne-sdm-auth --kind xsuaa --for hybrid",
+    "bind:destinations": "cds bind uaa --to sitbne-sdm-destination --kind destination --for hybrid",
+    "bind:connectivity": "cds bind uaa --to sitbne-sdm-connectivity --kind connectivity --for hybrid",
+    "xsuaa:build": "cds compile srv/ --to xsuaa > xs-security.json",
+    "xsuaa:create": "cf create-service xsuaa application sitbne-sdm-auth -c xs-security.json",
+    "xsuaa:update": "cf update-service sitbne-sdm-auth -c xs-security.json",
+    "xsuaa:create:key": " cf create-service-key sitbne-sdm-auth  sitbne-sdm-auth-key",
+    "xsuaa:download:key": "cf service-key  sitbne-sdm-auth sitbne-sdm-auth-key",
+    "build:cf": "mbt build",
+    "watch-sitbne-sdm-files": "cds watch --open sitbne-sdm-files/webapp/index.html?sap-ui-xx-viewCache=false",
+    "undeploy": "cf undeploy sitbne-sdm --delete-services --delete-service-keys --delete-service-brokers",
+    "build": "rimraf resources mta_archives && mbt build --mtar archive",
+    "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
+    "deploy:cf": "cf deploy mta_archives/sitbne-sdm_1.0.0.mtar --retries 0"
+  },
+  "cds": {
+    "requires": {
+      "destinations": true,
+      "[hybrid]": {
+        "auth": "xsuaa",
+        "sap-cap-sdm-plugin": {
+          "impl": "sap-cap-sdm-plugin",
+          "settings": {
+            "destination": "sitbne-sdm-system",
+            "repositoryId": "4c1e1912-1c0a-4a5b-81c8-54c867cb5bd0"
+          }
+        }
+      },
+      "[production]": {
+        "auth": "xsuaa",
+        "sap-cap-sdm-plugin": {
+          "impl": "sap-cap-sdm-plugin",
+          "settings": {
+            "destination": "dropbear-sdm",
+            "repositoryId": "4c1e1912-1c0a-4a5b-81c8-54c867cb5bd0"
+          }
+        }
+      },
+      "auth": "xsuaa"
+    }
+  },
+  "sapux": [
+    "app/sitbne-sdm-files"
+  ]
+}
