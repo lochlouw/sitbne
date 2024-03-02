@@ -1,0 +1,21 @@
+@clientid=sb-soap-cds-dev-lochlouw-free-sitbne!t9784
+@clientsecret=pjCqoF75Le13BVo5WLnNEvb4SNY=
+@identityzone=dev-lochlouw
+@region=ap10
+@url=https://{{identityzone}}.authentication.{{region}}.hana.ondemand.com
+@org=dev-lochlouw-free
+@space=sitbne
+@api=https://{{org}}-{{space}}-soap-cds-srv.cfapps.{{region}}.hana.ondemand.com
+
+
+###########
+# @name auth
+POST {{url}}/oauth/token?grant_type=client_credentials HTTP/1.1
+Authorization: Basic {{clientid}}:{{clientsecret}}
+
+###########
+# @name sayHello
+GET {{api}}/say-hello/SayHello
+Authorization: Bearer {{auth.response.body.access_token}}
+Accept: application/json
+Content-Type: application/json

@@ -9,27 +9,46 @@
     "@sap-cloud-sdk/connectivity": "^3.12.0",
     "@sap-cloud-sdk/http-client": "^3.12.0",
     "@sap/cds": "^7",
+    "@sap/xssec": "^3.6.1",
     "express": "^4",
+    "passport": "^0.7.0",
     "soap": "^1.0.0"
   },
   "devDependencies": {
     "@cap-js/sqlite": "^1",
-    "@sap-cloud-sdk/test-util": "^3.12.0"
+    "@sap-cloud-sdk/test-util": "^3.12.0",
+    "@sap/cds-dk": "^7",
+    "rimraf": "^3.0.2"
   },
   "scripts": {
-    "start": "cds-serve"
+    "start": "cds-serve",
+    "build": "rimraf resources mta_archives && mbt build --mtar archive",
+    "build:cf": "mbt build",
+    "deploy:cf": "cf deploy mta_archives/soap-cds_1.0.0.mtar --retries 0"
   },
   "cds": {
     "requires": {
       "sayHello": {
         "kind": "SOAP",
+        "[development": {
+          "credentials": {
+            "destination": "soap-server",
+            "url": "http://127.0.0.1:8001",
+            "path": "/SayHello"
+          }
+        },
         "credentials": {
-          "name": "soap-server",
-          "url": "http://127.0.0.1:8001",
+          "destination": "soap-server",
           "path": "/SayHello"
         }
       },
-      "destinations": true
+      "destinations": true,
+      "auth": {
+        "kind": "xsuaa",
+        "[development]": {
+          "kind": "mocked"
+        }
+      }
     }
   }
 }
