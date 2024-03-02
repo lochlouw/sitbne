@@ -9,32 +9,15 @@ var service = {
   Hello_Service: {
     Hello_Port: {
       sayHello: function (args) {
+        console.log(">> calling Say Hello! ");
+        console.log(">> Values <<",args);
         return {
-          greeting: args.firstName,
+          greeting: `Hello ${args.firstName}!`,
         };
       },
     },
   },
 };
-
-// server = expressServer.listen(51515, function () {
-//     var soapServer = soap.listen(expressServer, '/SayHello', service, wsdl);
-//     url = 'http://' + server.address().address + ':' + server.address().port;
-//     if (server.address().address === '0.0.0.0' || server.address().address === '::') {
-//       url = 'http://127.0.0.1:' + server.address().port;
-//     }
-//     done();
-//   });
-
-// //http server example
-// var server = http.createServer(function(request,response) {
-//     response.end('404: Not Found: ' + request.url);
-// });
-
-// server.listen(8000);
-// soap.listen(server, '/wsdl', service, xml, function(){
-//   console.log('server initialized');
-// });
 
 //express server example
 var app = express();

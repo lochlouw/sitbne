@@ -10,8 +10,7 @@
     "@sap-cloud-sdk/http-client": "^3.12.0",
     "@sap/cds": "^7",
     "express": "^4",
-    "soap": "^1.0.0",
-    "xml2js": "^0.6.2"
+    "soap": "^1.0.0"
   },
   "devDependencies": {
     "@cap-js/sqlite": "^1",

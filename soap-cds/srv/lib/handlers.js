@@ -1,5 +1,5 @@
 const { getSoapService } = require('./soap-service');
-const xml2js = require('xml2js');
+// const xml2js = require('xml2js');
 
 let sayHelloServicePromise = null;
 let sayHelloServiceEndpoint = { url: null };
