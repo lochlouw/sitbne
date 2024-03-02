@@ -1,0 +1,64 @@
+
+@api=http://localhost:4004
+
+###
+#
+GET {{api}}/odata/v4/blog HTTP/1.1
+Authorization: Basic admin:admin
+Accept: application/json
+Content-Type: application/json
+
+###
+#
+GET {{api}}/odata/v4/blog/Posts?$expand=comments HTTP/1.1
+Authorization: Basic admin:admin
+Accept: application/json
+Content-Type: application/json
+
+
+###
+#
+POST {{api}}/odata/v4/blog/Posts HTTP/1.1
+Authorization: Basic admin:admin
+Accept: application/json
+Content-Type: application/json
+
+{
+    "title": "New Test",
+    "text": "This is a test",
+    "subject": "Testing of events"
+}
+
+
+###
+#
+POST {{api}}/odata/v4/blog/Comments HTTP/1.1
+Authorization: Basic admin:admin
+Accept: application/json
+Content-Type: application/json
+
+{
+    "post_ID": "c94e1340-295c-4db7-8a61-fff6f2d79c11",
+    "text": "This is a test"
+}
+
+###
+#
+GET {{api}}/odata/v4/blog/Posts HTTP/1.1
+Authorization: Basic user:user
+Accept: application/json
+Content-Type: application/json
+
+###
+#
+GET {{api}}/odata/v4/blog/Posts HTTP/1.1
+Authorization: Basic user:user
+Accept: application/json
+Content-Type: application/json
+
+###
+#
+GET {{api}}/odata/v4/blog/MyPosts() HTTP/1.1
+Authorization: Basic user:user
+Accept: application/json
+Content-Type: application/json
