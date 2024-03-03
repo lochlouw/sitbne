@@ -8,11 +8,13 @@ build-parameters:
   before-all:
     - builder: custom
       commands:
-        - npx cds build --production
+        - npx cds build
 modules:
   - name: sitbne-listener-srv
     type: nodejs
     path: gen/srv
+    # properties:
+    #   NODE_ENV: development
     parameters:
       buildpack: nodejs_buildpack
     build-parameters:

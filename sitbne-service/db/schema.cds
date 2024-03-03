@@ -34,4 +34,5 @@ entity Comments : cuid, managed {
 entity Likes {
     key comment : Association to Comments;
     key user    : User;
+        likedAt : Timestamp @cds.on.insert : $now;
 }
