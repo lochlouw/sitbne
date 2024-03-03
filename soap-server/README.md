@@ -1,6 +1,6 @@
-# SOAP CDS
+# SOAP Server
 
-This is a basic CAP Application demonstrating integration with SOAP via our soap-server application.    
+This is a basic SOAP server application.  It is used in conjunction with project [soap-cds](/soap-cds/README.md) to expose the basic SOAP capability used to demonstrate integration with CAP.  
 
 ## Prerequisites
 
@@ -13,12 +13,12 @@ Before you begin, ensure you have met the following requirements:
 
 To install SOAP Server, follow these steps:
 
-1. Navigate into the project directory: `cd soap-cds`
+1. Navigate into the project directory: `cd soap-server`
 2. Install dependencies: `npm install`
 
 ## Using SOAP Server
 
 To use SOAP Server, follow these steps:
 
-1. Start the server: `cds watch`
-2. The server will start running at `http://localhost:4004`
+1. Start the server: `npm start`
+2. The server will start running at `http://localhost:8001`
