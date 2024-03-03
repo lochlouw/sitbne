@@ -4,7 +4,7 @@ class BlogFeed extends cds.ApplicationService {
   async init() {
     const messaging = await cds.connect.to("messaging");
     // const BlogService = await cds.connect.to("BlogService");
-    // const { Events } = this.entities("lochlouw.sitbne");
+    const { Events } = this.entities("lochlouw.sitbne");
 
     // BlogService.on("Post.Created.v1", (msg) => {
     //   console.log(msg);
@@ -18,6 +18,14 @@ class BlogFeed extends cds.ApplicationService {
       ],
       async (msg) => {
         console.log("msg", msg);
+
+        await INSERT.into(Events,[
+          {
+            event: msg.event,
+            text: JSON.stringify(msg)
+          }
+        ]);
+
       }
     );
     messaging.on(
@@ -25,9 +33,18 @@ class BlogFeed extends cds.ApplicationService {
         "BlogService.Comment.Created.v1",
         "BlogService.Comment.Modified.v1",
         "BlogService.Comment.Deleted.v1",
+        "BlogService.Comment.Liked.v1",
+        "BlogService.Comment.Unliked.v1"
       ],
       async (msg) => {
         console.log("msg", msg);
+
+        await INSERT.into(Events,[
+          {
+            event: msg.event,
+            text: JSON.stringify(msg)
+          }
+        ]);
       }
     );
 

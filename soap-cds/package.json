@@ -24,6 +24,7 @@
     "start": "cds-serve",
     "build": "rimraf resources mta_archives && mbt build --mtar archive",
     "build:cf": "mbt build",
+    "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
     "deploy:cf": "cf deploy mta_archives/soap-cds_1.0.0.mtar --retries 0"
   },
   "cds": {

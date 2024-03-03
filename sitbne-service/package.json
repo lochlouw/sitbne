@@ -10,28 +10,39 @@
     "@cap-js/change-tracking": "^1.0.5",
     "@cap-js/graphql": "^0.10.0",
     "@cap-js/telemetry": "^0.0.4",
+    "@grpc/grpc-js": "^1.10.1",
+    "@opentelemetry/exporter-metrics-otlp-grpc": "^0.49.1",
+    "@opentelemetry/exporter-trace-otlp-grpc": "^0.49.1",
     "@sap/cds": "^7",
     "@sap/xb-msg-amqp-v100": "^0.9.58",
     "@sap/xssec": "^3",
     "express": "^4",
     "passport": "^0.7.0",
-    "redis": "^4"
-  },
-  "devDependencies": {
+    "redis": "^4",
+    "sqlite": "^5.1.1",
     "@cap-js/sqlite": "^1.5.1"
   },
+  "devDependencies": {
+    "@sap/cds-dk": "^7",
+    "cds-launchpad-plugin": "^2.1.8",
+    "cds-swagger-ui-express": "^0.8.0",
+    "rimraf": "^3.0.2"
+  },
   "scripts": {
-    "start": "cds-serve"
+    "start": "cds-serve",
+    "build": "rimraf resources mta_archives && mbt build --mtar archive",
+    "build:cf": "mbt build",
+    "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
+    "deploy:cf": "cf deploy mta_archives/sitbne_1.0.0.mtar --retries 0"
   },
   "cds": {
     "requires": {
       "destinations": true,
       "db": {
-        "kind": "sql",
+        "kind": "sqlite",
         "credentials": {
-          "url": "db.sqlite"
-        },
-        "schema_evolution": "auto"
+          "url":":memory:"
+        }
       },
       "[production]": {
         "auth": "xsuaa",
@@ -39,9 +50,11 @@
           "kind": "redis-messaging"
         }
       },
-      "messaging": {
-        "kind": "file-based-messaging",
-        "file": "../msg-box"
+      "[hybrid]": {
+        "auth": "xsuaa",
+        "messaging": {
+          "kind": "redis-messaging"
+        }
       },
       "[development]": {
         "auth": {
@@ -56,7 +69,8 @@
             "moderator": {
               "password": "moderator",
               "roles": [
-                "user", "moderator"
+                "user",
+                "moderator"
               ]
             },
             "user": {
@@ -67,11 +81,17 @@
             }
           }
         },
+        
         "messaging": {
           "kind": "redis-messaging",
           "format": "cloudevents"
         }
+      },
+      "messaging": {
+        "kind": "file-based-messaging",
+        "file": "../msg-box"
       }
+     
     }
   }
 }

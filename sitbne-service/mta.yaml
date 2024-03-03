@@ -1,0 +1,54 @@
+_schema-version: '3.1'
+ID: sitbne
+version: 1.0.0
+description: "A simple CAP project."
+parameters:
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npx cds build
+modules:
+  - name: sitbne-srv
+    type: nodejs
+    path: gen/srv
+    properties:
+      NODE_ENV: development    
+    parameters:
+      buildpack: nodejs_buildpack
+    build-parameters:
+      builder: npm
+    provides:
+      - name: srv-api # required by consumers of CAP services (e.g. approuter)
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: sitbne-destination
+      - name: sitbne-redis
+      - name: sitbne-auth
+      - name: sitbne-logging
+
+resources:
+  - name: sitbne-destination
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite
+  - name: sitbne-redis
+    type: org.cloudfoundry.existing-service
+    parameters:
+      service-name: redis-free
+  - name: sitbne-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+      config:
+        xsappname: sitbne-${org}-${space}
+        tenant-mode: dedicated
+  - name: sitbne-logging
+    type: org.cloudfoundry.existing-service
+    parameters:
+      service-name: sitbne-sdm-logging

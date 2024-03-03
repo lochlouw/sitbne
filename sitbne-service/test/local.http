@@ -24,10 +24,17 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "title": "New Test",
+    "title": "awesome",
     "text": "This is a test",
     "subject": "Testing of events"
 }
+
+###
+#
+GET http://localhost:4005/odata/v4/blog-feed/Events HTTP/1.1
+Authorization: Basic admin:admin
+Accept: application/json
+Content-Type: application/json
 
 
 ###

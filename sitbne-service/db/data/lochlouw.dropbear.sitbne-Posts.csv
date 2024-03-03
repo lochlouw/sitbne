@@ -1,4 +1,6 @@
 ID;subject;title;text;createdBy
+8647b2fa-d86a-4f8d-8e87-0ff169d544c7;FOO;FOO;FOO text;user
+4cf2f783-9bf9-4379-bab0-fabf886876d7;BAR;BAR;BAR text;moderator
 c94e1340-295c-4db7-8a61-fff6f2d79c11;"BTP, Build Code";March 2024;"This session we'll have two great talks lined up from two great speakers.
 
 First up will be Liam Mischewski from SAP talking about SAP Build Code. Liam has a long track history in SAP & currently resides in the Custom Advisary Team as an Innovation Architect. You may know him from some of the tech hubs & code jams run last year.

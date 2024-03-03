@@ -6,6 +6,7 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "@cap-js/sqlite": "^1",
     "@sap-cloud-sdk/http-client": "^3.12.0",
     "@sap-cloud-sdk/resilience": "^3.12.0",
     "@sap/cds": "^7",
@@ -13,10 +14,10 @@
     "@sap/xssec": "^3",
     "express": "^4",
     "passport": "^0.7.0",
-    "redis": "^4"
+    "redis": "^4",
+    "sqlite": "^5.1.1"
   },
   "devDependencies": {
-    "@cap-js/sqlite": "^1",
     "@sap/cds-dk": "^7"
   },
   "scripts": {
@@ -29,10 +30,24 @@
   },
   "cds": {
     "requires": {
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "url": ":memory:"
+        },
+        "schema_evolution": "auto"
+      },
       "[production]": {
         "auth": "xsuaa",
         "messaging": {
           "kind": "redis-messaging"
+        },
+        "db": {
+          "kind": "sqlite",
+          "credentials": {
+            "url": "listener.sqlite"
+          },
+          "schema_evolution": "auto"
         }
       },
       "[hybrid]": {
