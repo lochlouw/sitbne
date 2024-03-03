@@ -13,8 +13,8 @@ service CMISService {
                 type: 'property',
                 path: 'cmis:name'
             };
-            url          : String       @Sdm.Field     : {type: 'link'};
-            content      : LargeBinary  @Core.MediaType: contentType  @Core.ContentDisposition.Filename: name;
+            // url          : String       @Sdm.Field     : {type: 'link'};
+            content      : LargeBinary  @Core.MediaType: contentType  @Core.ContentDisposition.Filename: name @Core.ContentDisposition.Type: 'inline';
             contentType  : String       @Core.IsMediaType
                                         @Sdm.Field     : {
                 type: 'property',

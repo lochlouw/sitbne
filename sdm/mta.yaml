@@ -7,12 +7,10 @@ modules:
     type: nodejs
     path: gen/srv
     requires:
-      # - name: sitbne-sdm-db
       - name: sitbne-sdm-connectivity
       - name: sitbne-sdm-destination
       - name: sitbne-sdm-auth
       - name: sitbne-sdm-logging
-      - name: sitbne-sdm-db
     provides:
       - name: srv-api
         properties:
@@ -22,13 +20,6 @@ modules:
       memory: 256M
     build-parameters:
       builder: npm
-  # - name: sitbne-sdm-db-deployer
-  #   type: hdb
-  #   path: gen/db
-  #   requires:
-  #   - name: sitbne-sdm-db
-  #   parameters:
-  #     buildpack: nodejs_buildpack
   - name: sitbne-sdm-destination-content
     type: com.sap.application.content
     requires:
@@ -59,6 +50,11 @@ modules:
         # existing_destinations_policy: update
         subaccount:
           destinations:
+            - Authentication: OAuth2UserTokenExchange
+              Name: sitbne-sdm-auth
+              ServiceInstanceName: sitbne-sdm-auth
+              ServiceKeyName: sitbne-sdm-auth-key
+              sap.cloud.service: lochlouw.sitbne
             - Name: sitbne-sdm-repo-host
               ServiceInstanceName: sitbne-sdm-html5-srv
               ServiceKeyName: sitbne-sdm-repo-host-key
@@ -92,22 +88,6 @@ modules:
       supported-platforms:
         []
 
-  - name: sitbne-sdm
-    type: approuter.nodejs
-    path: app/
-    parameters:
-      keep-existing-routes: true
-      disk-quota: 256M
-      memory: 256M
-    requires:
-      - name: srv-api
-        group: destinations
-        properties:
-          name: srv-api # must be used in xs-app.json as well
-          url: ~{srv-url}
-          forwardAuthToken: true
-      - name: sitbne-sdm-auth
-
   # - name: sitbne-sdm
   #   type: approuter.nodejs
   #   path: app/
@@ -126,7 +106,6 @@ modules:
   #     - name: sitbne-sdm-logging
 
 resources:
-  # - name: sitbne-sdm-db
   - name: sitbne-sdm-connectivity
     type: org.cloudfoundry.managed-service
     parameters:
@@ -136,7 +115,7 @@ resources:
     type: org.cloudfoundry.managed-service
     parameters:
       config:
-        HTML5Runtime_enabled: false
+        HTML5Runtime_enabled: true
         init_data:
           instance:
             destinations:
@@ -179,12 +158,6 @@ resources:
     parameters:
       service: application-logs
       service-plan: lite
-
-  # - name: sitbne-sdm-db
-  #   type: com.sap.xs.hdi-container
-  #   parameters:
-  #     service: hana
-  #     service-plan: hdi-shared
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true

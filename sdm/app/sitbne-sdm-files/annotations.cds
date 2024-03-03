@@ -4,28 +4,28 @@ annotate service.Files with @(
     UI.LineItem : [
         {
             $Type : 'UI.DataField',
-            Label : 'id',
+            Label : 'ID',
             Value : id,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'name',
+            Label : 'Name',
             Value : name,
-        },
-        {
-            $Type : 'UI.DataField',
-            Label : 'url',
-            Value : url,
-        },
-        {
-            $Type : 'UI.DataField',
-            Label : 'content',
-            Value : content,
         },
         {
             $Type : 'UI.DataField',
             Label : 'contentType',
             Value : contentType,
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : createdBy,
+            Label : '{i18n>Createdby}',
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : creationDate,
+            Label : '{i18n>Creationdate}',
         },
     ]
 );
@@ -42,16 +42,6 @@ annotate service.Files with @(
                 $Type : 'UI.DataField',
                 Label : 'name',
                 Value : name,
-            },
-            {
-                $Type : 'UI.DataField',
-                Label : 'url',
-                Value : url,
-            },
-            {
-                $Type : 'UI.DataField',
-                Label : 'content',
-                Value : content,
             },
             {
                 $Type : 'UI.DataField',

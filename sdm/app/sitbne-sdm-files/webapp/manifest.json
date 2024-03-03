@@ -33,7 +33,7 @@
       "inbounds": {
         "sitbne-sdm-files": {
           "semanticObject": "sitbne",
-          "action": "sdm-files",
+          "action": "files",
           "title": "{{flpTitle}}",
           "signature": {
             "parameters": {},
