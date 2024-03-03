@@ -23,3 +23,6 @@ File or Folder | Purpose
 ## Learn More
 
 Learn more at https://cap.cloud.sap/docs/get-started/.
+
+## Links
+- [Redis on SAP BTP, hyperscaler option](https://discovery-center.cloud.sap/serviceCatalog/redis-hyperscaler-option?region=all)
